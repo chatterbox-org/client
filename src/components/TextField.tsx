@@ -1,4 +1,4 @@
-import { JSX, createSignal } from "solid-js";
+import { JSX } from "solid-js";
 
 interface TextFieldProps {
     children?: JSX.Element[] | JSX.Element;

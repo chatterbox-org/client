@@ -11,5 +11,5 @@ export interface User {
 export interface Message {
     content: string;
     author: User;
-    timestamp: number;
+    timestamp?: number;
 }

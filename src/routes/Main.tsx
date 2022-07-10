@@ -1,17 +1,20 @@
-import { createSignal, ErrorBoundary } from "solid-js";
+import { createSignal } from "solid-js";
 import { useNavigate } from "solid-app-router";
 
 import Button from "../components/Button";
 import TextField from "../components/TextField";
 import { trimUrl } from "../lib/urlUtils";
 import { BaseRoute } from "../def";
+import { currentSocket } from "../lib/connect";
 
 export const [serverUrl, setServerUrl] = createSignal("");
+export const [currentUsername, setCurrentUsername] = createSignal("");
 
 export default {
     name: "Main",
     path: "/",
     component: () => {
+        currentSocket()?.disconnect();
         const [error, setError] = createSignal<Error>();
         const navigate = useNavigate();
 
@@ -24,6 +27,7 @@ export default {
 
                 <div class="flex md:flex-row <md:flex-col gap-3">
                     <TextField onChange={(e: Event) => { setServerUrl((e.target as HTMLTextAreaElement).value) }} placeholder="Enter a server URL" />
+                    <TextField onChange={(e: Event) => { setCurrentUsername((e.target as HTMLTextAreaElement).value) }} placeholder="Enter a username" />
                     <Button onClick={() => {
                         try {
                             navigate(`/chat/${trimUrl(serverUrl())}`) 
